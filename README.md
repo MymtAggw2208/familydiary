@@ -1,24 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby on Railsの自習用に使っているリポジトリです。
 
-Things you may want to cover:
+日記アプリですが、特に公開予定はありません。
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ちょこちょこ機能追加していくつもりです。
