@@ -1,0 +1,24 @@
+<h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name, data: { turbo: false })) do |f| %>
+  <div class="my-4">
+    <%= f.label :login_id, class: "form-label" %><br />
+    <%= f.text_field :login_id, autofocus: true, class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= f.label :password, class: "form-label" %><br />
+    <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="my-4">
+      <%= f.check_box :remember_me, class: "form-check-input" %>
+      <%= f.label :remember_me, class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <div class="my-4">
+    <%= f.submit "Log in", class: "btn btn-primary" %>
+  </div>
+<% end %>

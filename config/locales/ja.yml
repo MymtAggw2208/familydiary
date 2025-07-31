@@ -1,0 +1,40 @@
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+      diary: "日記"
+      comment: "コメント"
+    attributes:
+      user:
+        login_id: "ログインID"
+        name: "名前"
+      diary:
+        user: "ユーザー"
+        title: "タイトル"
+        description: "内容"
+        picture: "画像"
+        published_at: "日付"
+    errors:
+      models:
+        diary:
+          attributes:
+            user:
+              required: "投稿ユーザー情報を設定できません"
+        user:
+          attributes:
+            login_id:
+              blank: "ログインIDを入力してください"
+            email:
+              blank: "メールアドレスを入力してください"
+            password:
+              blank: "パスワードを入力してください"
+            name:
+              blank: "名前を入力してください"
+  helpers:
+    submit:
+      diary:
+        create: "投稿"
+        update: "更新"
+      comment:
+        create: "投稿"
+        update: "更新"

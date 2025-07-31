@@ -1,0 +1,37 @@
+<%= form_with(model: diary) do |form| %>
+  <% if diary.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(diary.errors.count, "error") %> prohibited this diary from being saved:</h2>
+
+      <ul>
+        <% diary.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-4">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.textarea :description, placeholder: "日記を入力してください...", class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= form.label :picture, class: "form-label" %>
+    <%= form.file_field :picture, class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= form.label :published_at, class: "form-label" %>
+    <%= form.date_field :published_at, class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<div id="<%= dom_id diary %>" class="row">
+
+  <div class="col-md-6 my-3">
+    <%= image_tag(diary.picture_url, width: '100%') if diary.picture.present? %>
+  </div>
+
+  <div class="col-md-6 my-3">
+    <p>
+      <h1>
+        <%= diary.title %>
+      </h1>
+    </p>
+
+    <div class="d-flex align-items-center gap-3 my-2">
+      <p class="my-4 text-info-emphasis">
+        <%= diary.user.name %>
+      </p>
+
+      <time class="badge rounded-pill bg-info text-dark">
+        <%= diary.published_at %>
+      </time>
+    </div>
+
+    <p class="my-4 text-wrap">
+      <%= simple_format(diary.description) %>
+    </p>
+  </div>
+
+</div>
