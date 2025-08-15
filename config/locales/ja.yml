@@ -8,6 +8,7 @@ ja:
       user:
         login_id: "ログインID"
         name: "名前"
+        role: "権限"
       diary:
         user: "ユーザー"
         title: "タイトル"

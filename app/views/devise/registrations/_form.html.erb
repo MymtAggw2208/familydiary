@@ -1,0 +1,73 @@
+
+
+<%= form_for(resource, as: resource_name, url: url, html: { method: method }, data: { turbo: false }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <% if current_user.administrator? %>
+    <div class="my-4">
+      <%= f.label :login_id, class: "form-label" %><br />
+      <%= f.text_field :login_id, autofocus: true, class: "form-control" %>
+    </div>
+  <% end %>
+
+  <div class="my-4">
+    <%= f.label :name, class: "form-label" %><br />
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= f.label :email, class: "form-label" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+  </div>
+
+  <% if edit_mode %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>メールアドレスを確認中です: <%= resource.unconfirmed_email %></div>
+    <% end %>
+  <% end %>
+
+  <div class="my-4">
+    <%= f.label :password, class: "form-label" %> <% if edit_mode %><i>(変更しない場合は入力不要です)</i><% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="my-4">
+    <%= f.label :password_confirmation, class: "form-label" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+  </div>
+
+  <% if edit_mode %>
+    <div class="my-4">
+        <%= f.label :current_password, class: "form-label" %> <i>(変更を確定するため必要です)</i><br />
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+    </div>
+  <% end %>
+
+  <% if current_user.administrator? && resource != current_user %>
+    <div class="my-4">
+      <%= f.label :role, class: "form-label" %><br />
+      <% unless edit_mode %>
+        <%= f.radio_button :role_type, "administrator" %>
+        <%= f.label :role_type_admin, "管理者", class: "form-label" %>
+      <% end %>
+      <%= f.radio_button :role_type, "test" %>
+      <%= f.label :role_type_test, "テスト", class: "form-label" %>
+      <%= f.radio_button :role_type, "general", checked: resource.role.nil? %>
+      <%= f.label :role_type_general, "一般", class: "form-label" %>
+    </div>
+  <% end %>
+
+  <% if edit_mode %>
+    <div class="my-4">
+        <%= f.submit "更新", class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <div class="my-4">
+        <%= f.submit "新規登録", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

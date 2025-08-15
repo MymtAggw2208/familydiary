@@ -14,6 +14,7 @@
     <%= form_with(model: [@diary, @comment], local: true, data: { turbo: false }) do |form| %>
       <% if @comment.errors.any? %>
         <div class="alert alert-danger">
+          <h5><%= @comment.errors.count %> 件のエラーにより保存できませんでした:</h5>
           <ul>
             <% @comment.errors.full_messages.each do |message| %>
               <li><%= message %></li>

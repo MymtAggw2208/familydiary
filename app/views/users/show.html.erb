@@ -1,0 +1,37 @@
+<h1>ユーザー情報</h1>
+
+<% if @user %>
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th>ログインID</th>
+        <td><%= link_to @user.login_id, edit_other_user_registration_path(@user) %></td>
+      </tr>
+      <tr>
+        <th>名前</th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th>メールアドレス</th>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <th>権限種類</th>
+        <td>
+          <% role_names = { 'admin' => '管理者', 'test' => 'テストユーザー', nil => '一般ユーザー' } %>
+          <%= role_names[@user.role] || @user.role %>
+        </td>
+      </tr>
+      <tr>
+        <th>アカウント作成日</th>
+        <td><%= @user.created_at.strftime("%Y年%m月%d日 %H:%M") %></td> 
+      </tr>
+      <tr>
+        <th>アカウント更新日</th>
+        <td><%= @user.updated_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+      </tr>
+    </tbody>
+  </table>
+<% else %>
+  <p>ユーザー情報が見つかりません。</p>
+<% end %>

@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_diary, only: [:create]
   before_action :set_comment, only: [:destroy]
 
@@ -16,12 +17,8 @@ class CommentsController < ApplicationController
   def destroy
     @diary = Diary.find(params[:diary_id])
     @comment = @diary.comments.find(params[:id])
-    if @comment.user == current_user
-      @comment.destroy
-      redirect_to @comment.diary, notice: 'コメントを削除しました。'
-    else
-      redirect_to @comment.diary, alert: '削除権限がありません。'
-    end
+    authorize_comment_owner("削除")
+    @comment.destroy
   end
 
   private
@@ -36,5 +33,9 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:content)
+  end
+
+  def authorize_comment_owner(action)
+    require_owner_permission(@comment, "このコメントを#{action}する権限がありません。")
   end
 end

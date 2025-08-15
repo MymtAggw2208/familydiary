@@ -32,3 +32,10 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore sqlite3
+db/development.sqlite3
+db/*.sqlite3-journal
+
+# Ignore debug settings
+.vscode/launch.json

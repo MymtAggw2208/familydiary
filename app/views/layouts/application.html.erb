@@ -32,19 +32,51 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mbb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/diaries">日記一覧</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                日記
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" aria-current="page" href="/diaries">一覧</a>
+                </li>
+                <li>
+                  <%= link_to "新規投稿", new_diary_path, class: "dropdown-item" %>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <%= link_to "新規投稿", new_diary_path, class: "nav-link active" %>
-            </li>
+            <% if current_user.present? %>
+              <% if current_user.administrator? %>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      ユーザー管理
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" aria-current="page" href="/users">一覧</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" aria-current="page" href="/users/sign_up">登録</a>
+                      </li>
+                    </ul>
+                  </li>
+              <% end %>
+            <% end %>
           </ul>
           <ul class="nav">
-            <li class="nav-item">
-              <% if current_user.present? %>
-                <%= current_user.name + " さん" %>
-              <% end %>
-            </li>
+            <% if current_user.present? %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <%= current_user.name + " さん" %>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" aria-current="page" href="/users/edit">編集</a>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
           </ul>
           <span  class="navbar-text pull-right ms-2">
             <% if user_signed_in? %>

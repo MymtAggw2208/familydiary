@@ -5,7 +5,7 @@ class DiariesController < ApplicationController
 
   # GET /diaries or /diaries.json
   def index
-    @diaries = Diary.all
+    @diaries = Diary.all.order(created_at: :desc)
   end
 
   # GET /diaries/1 or /diaries/1.json
@@ -16,11 +16,12 @@ class DiariesController < ApplicationController
 
   # GET /diaries/new
   def new
-    @diary = Diary.new
+    @diary = current_user.diaries.build
   end
 
   # GET /diaries/1/edit
   def edit
+    authorize_diary_owner("編集")
   end
 
   # POST /diaries or /diaries.json
@@ -41,16 +42,13 @@ class DiariesController < ApplicationController
   # PATCH/PUT /diaries/1 or /diaries/1.json
   def update
     respond_to do |format|
-      if @diary.user == current_user
-        if @diary.update(diary_params)
-          format.html { redirect_to @diary, notice: "日記を更新しました。" }
-          format.json { render :show, status: :ok, location: @diary }
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @diary.errors, status: :unprocessable_entity }
-        end
+      authorize_diary_owner("更新")
+      if @diary.update(diary_params)
+        format.html { redirect_to @diary, notice: "日記を更新しました。" }
+        format.json { render :show, status: :ok, location: @diary }
       else
-        redirect_to @comment.diary, alert: '編集権限がありません。'
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @diary.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,13 +56,10 @@ class DiariesController < ApplicationController
   # DELETE /diaries/1 or /diaries/1.json
   def destroy
     respond_to do |format|
-      if @diary.user == current_user
-        @diary.destroy!
-        format.html { redirect_to diaries_path, status: :see_other, notice: "日記を削除しました。" }
-        format.json { head :no_content }
-      else
-        redirect_to @comment.diary, alert: '削除権限がありません。'
-      end
+      authorize_diary_owner("削除")
+      @diary.destroy!
+      format.html { redirect_to diaries_path, status: :see_other, notice: "日記を削除しました。" }
+      format.json { head :no_content }
     end
   end
 
@@ -77,5 +72,10 @@ class DiariesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def diary_params
       params.expect(diary: [ :title, :description, :picture, :published_at ])
+    end
+
+    # 日記操作権限
+    def authorize_diary_owner(action)
+      require_owner_permission(@diary, "この日記を#{action}する権限がありません。")
     end
 end
