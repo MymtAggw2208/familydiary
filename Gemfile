@@ -60,7 +60,7 @@ group :development, :test do
 
   # for debug
   gem "ruby-debug-ide"
-  gem "debase",  "0.2.5.beta2"
+  gem "debase",  "0.2.9"
 end
 
 group :development do
