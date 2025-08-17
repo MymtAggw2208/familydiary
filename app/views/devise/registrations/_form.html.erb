@@ -50,8 +50,8 @@
   <% if current_user.administrator? && resource != current_user %>
     <div class="my-4">
       <%= f.label :role, class: "form-label" %><br />
-      <% unless edit_mode %>
-        <%= f.radio_button :role_type, "administrator" %>
+      <% if current_user.administrator? %>
+        <%= f.radio_button :role_type, "admin" %>
         <%= f.label :role_type_admin, "管理者", class: "form-label" %>
       <% end %>
       <%= f.radio_button :role_type, "test" %>

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_diary, only: [:create]
-  before_action :set_comment, only: [:destroy]
+  before_action :set_diary, only: [ :create ]
+  before_action :set_comment, only: [ :destroy ]
 
   def create
     @comment = current_user.comments.build(comment_params.merge(diary: @diary))

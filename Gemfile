@@ -43,7 +43,7 @@ gem "mini_magick"
 
 # add login function
 gem "devise"
-gem 'devise-i18n'
+gem "devise-i18n"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -59,8 +59,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # for debug
-  gem 'ruby-debug-ide'
-  gem 'debase',  '0.2.5.beta2'
+  gem "ruby-debug-ide"
+  gem "debase",  "0.2.5.beta2"
 end
 
 group :development do
