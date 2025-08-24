@@ -26,15 +26,15 @@ class ApplicationController < ActionController::Base
     else
       @target_user = current_user
     end
-    
+
     unless current_user.can_edit_user?(@target_user)
       case action_type
       when :view
-        redirect_to root_path, alert: 'このユーザーの情報を閲覧する権限がありません。'
+        redirect_to root_path, alert: "このユーザーの情報を閲覧する権限がありません。"
       when :edit
-        redirect_to root_path, alert: 'このユーザーの情報を編集する権限がありません。'
+        redirect_to root_path, alert: "このユーザーの情報を編集する権限がありません。"
       else
-        redirect_to root_path, alert: 'このユーザーにアクセスする権限がありません。'
+        redirect_to root_path, alert: "このユーザーにアクセスする権限がありません。"
       end
     end
   end

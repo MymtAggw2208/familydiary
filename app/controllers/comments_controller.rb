@@ -7,10 +7,10 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params.merge(diary: @diary))
 
     if @comment.save
-      redirect_to @diary, notice: 'コメントを投稿しました。'
+      redirect_to @diary, notice: "コメントを投稿しました。"
     else
       @comments = @diary.comments.includes(:user).order(created_at: :asc)
-      render 'diaries/show'
+      render "diaries/show"
     end
   end
 

@@ -17,7 +17,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /users
   def create
     build_resource(sign_up_params)
-    
+
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -48,7 +48,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     render :edit
   end
 
-  # PUT /users 
+  # PUT /users
   def update
     # params[:id]がある場合は他のユーザーの更新、ない場合は自分の更新
     if params[:id].present?
@@ -56,7 +56,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     end
-    
+
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
     # パスワード更新のチェック
@@ -70,11 +70,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource_updated
       set_flash_message_for_update(resource, prev_unconfirmed_email)
-      
+
       # 管理者が他のユーザーを編集した場合と自分を編集した場合で分岐
       if params[:id].present? && current_user.administrator?
         # 他のユーザーを編集した場合
-        redirect_to user_path(resource), notice: 'ユーザー情報が正常に更新されました。'
+        redirect_to user_path(resource), notice: "ユーザー情報が正常に更新されました。"
       else
         # 自分を編集した場合
         bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
@@ -97,7 +97,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         set_flash_message! :notice, :destroyed
         redirect_to users_path
       else
-        redirect_to users_path, alert: '自分自身は削除できません。'
+        redirect_to users_path, alert: "自分自身は削除できません。"
       end
     else
       # 自分自身を削除する場合の通常のDevise処理
@@ -130,7 +130,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def sign_in_after_change_password?
     true
   end
-  
+
   def authenticate_user_for_admin_actions!
     redirect_to new_user_session_path unless user_signed_in?
   end
