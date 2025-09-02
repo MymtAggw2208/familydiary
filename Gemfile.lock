@@ -423,7 +423,7 @@ DEPENDENCIES
   brakeman
   capybara
   carrierwave
-  debase (= 0.2.9)
+  debase
   debug
   devise
   devise-i18n

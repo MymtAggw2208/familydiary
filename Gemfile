@@ -66,7 +66,7 @@ group :development, :test do
 
   # for debug
   gem "ruby-debug-ide"
-  gem "debase",  "0.2.9"
+  gem "debase"
 end
 
 group :development do
