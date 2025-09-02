@@ -35,7 +35,23 @@
   </div>
 <% end %>
 
-<div class="comments">
+<div class="comments">  
+  <% if @ai_reply %>
+    <div class="ai-reply comment mt-4">
+      <div class="comment mt-4">
+        <div class="comment-header">
+          <strong>🤖 アシスタントからの返信</strong>
+          <span class="comment-date">
+            <%= @ai_reply.replied_at.strftime('%Y年%m月%d日 %H:%M') %>
+          </span>
+        </div>
+        <div class="comment-content">
+          <%= simple_format(@ai_reply.content) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
   <% @comments.each do |comment| %>
     <div class="comment mt-4">
       <div class="comment-header">

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_31_084014) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_24_050552) do
+  create_table "ai_replies", force: :cascade do |t|
+    t.integer "diary_id", null: false
+    t.text "content"
+    t.datetime "replied_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["diary_id"], name: "index_ai_replies_on_diary_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "diary_id", null: false
@@ -48,6 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_084014) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "ai_replies", "diaries"
   add_foreign_key "comments", "diaries"
   add_foreign_key "comments", "users"
   add_foreign_key "diaries", "users"

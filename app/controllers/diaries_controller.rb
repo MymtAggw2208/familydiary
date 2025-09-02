@@ -12,6 +12,7 @@ class DiariesController < ApplicationController
   def show
     @comment = Comment.new
     @comments = @diary.comments.includes(:user).order(created_at: :asc)
+    @ai_reply = @diary.ai_reply
   end
 
   # GET /diaries/new
@@ -30,6 +31,8 @@ class DiariesController < ApplicationController
 
     respond_to do |format|
       if @diary.save
+        # 非同期でAI返信を生成
+        AiReplyJob.perform_later(@diary.id)
         format.html { redirect_to @diary, notice: "日記を登録しました。" }
         format.json { render :show, status: :created, location: @diary }
       else
