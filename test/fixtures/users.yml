@@ -12,7 +12,7 @@ one:
 
 two: 
   email: two@example.com
-  encrypted_password: "$2a$12$J4GnkEayd2ZjWHqqEs0xAOO75qdqQBLhmdn1IHHrh2DqS4a.VQGZC"
+  encrypted_password: "$2a$12$wKRQRA.EuibxW2RUa9p1xuIiCHVe/jecfoe3/pBL786phbxYY5xai"
   name: two_username
   login_id: two_loginid
 

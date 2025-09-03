@@ -1,18 +1,12 @@
 require "application_system_test_case"
 
 class DiariesTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
   setup do
     @user1 = users(:one)
     @diary1 = diaries(:one)
     @user2 = users(:two)
     @diary2 = diaries(:two)
-  end
-
-  def login_as(user)
-    visit new_user_session_path
-    fill_in "ログインID", with: user.login_id
-    fill_in "パスワード", with: "password1"
-    click_on "ログイン"
   end
 
   test "visiting the index" do
@@ -21,32 +15,31 @@ class DiariesTest < ApplicationSystemTestCase
   end
 
   test "should create diary" do
-    login_as(@user1)
+    login_as(@user2)
     visit diaries_url
+
+    click_on "日記" 
     click_on "新規投稿"
 
-    fill_in "内容", with: @diary.description
-    fill_in "画像", with: @diary.picture
-    fill_in "日付", with: @diary.published_at
-    fill_in "タイトル", with: @diary.title
+    fill_in "内容", with: @diary2.description
+    fill_in "日付", with: @diary2.published_at
+    fill_in "タイトル", with: @diary2.title
     click_on "投稿"
 
-    assert_text "Diary was successfully created"
+    assert_text "日記を登録しました。"
   end
 
   test "should update Diary" do
     login_as(@user2)
     visit diary_url(@diary2)
-    save_page
     click_on "編集", match: :first
 
-    fill_in "内容", with: @diary.description
-    fill_in "画像", with: @diary.picture
-    fill_in "日付", with: @diary.published_at
-    fill_in "タイトル", with: @diary.title
+    fill_in "内容", with: @diary2.description
+    fill_in "日付", with: @diary2.published_at
+    fill_in "タイトル", with: @diary2.title
     click_on "更新"
 
-    assert_text "Diary was successfully updated"
+    assert_text "日記を更新しました。"
   end
 
   test "should destroy Diary" do
