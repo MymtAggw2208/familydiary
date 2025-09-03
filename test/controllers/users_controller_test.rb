@@ -26,14 +26,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update other user" do
-    patch update_other_user_registration_url(@user.id), params: { 
-      user: { name: 'Updated Name' } 
+    patch update_other_user_registration_url(@user.id), params: {
+      user: { name: "Updated Name" }
     }
     assert_response :redirect
   end
 
   test "should destroy other user" do
-    assert_difference('User.count', -1) do
+    assert_difference("User.count", -1) do
       delete delete_other_user_registration_url(@deluser.id)
     end
     assert_response :redirect
