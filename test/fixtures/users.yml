@@ -6,12 +6,12 @@
 #
 one: 
   email: one@example.com
-  password_digest: "$2a$12$wKRQRA.EuibxW2RUa9p1xuIiCHVe/jecfoe3/pBL786phbxYY5xai"
+  encrypted_password: "$2a$12$wKRQRA.EuibxW2RUa9p1xuIiCHVe/jecfoe3/pBL786phbxYY5xai"
   name: one_username
   login_id: one_loginid
 
 two: 
   email: two@example.com
-  password_digest: "$2a$12$J4GnkEayd2ZjWHqqEs0xAOO75qdqQBLhmdn1IHHrh2DqS4a.VQGZC"
+  encrypted_password: "$2a$12$J4GnkEayd2ZjWHqqEs0xAOO75qdqQBLhmdn1IHHrh2DqS4a.VQGZC"
   name: two_username
   login_id: two_loginid
