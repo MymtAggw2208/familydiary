@@ -1,8 +1,19 @@
 require "application_system_test_case"
 
 class DiariesTest < ApplicationSystemTestCase
+  
   setup do
-    @diary = diaries(:one)
+    @user1 = users(:one) 
+    @diary1 = diaries(:one)
+    @user2 = users(:two) 
+    @diary2 = diaries(:two)
+  end
+
+  def login_as(user)
+    visit new_user_session_path
+    fill_in "ログインID", with: user.login_id
+    fill_in "パスワード", with: "password1"
+    click_on "ログイン"
   end
 
   test "visiting the index" do
@@ -11,37 +22,41 @@ class DiariesTest < ApplicationSystemTestCase
   end
 
   test "should create diary" do
+    login_as(@user1)
     visit diaries_url
     click_on "新規投稿"
 
-    fill_in "Description", with: @diary.description
-    fill_in "Picture", with: @diary.picture
-    fill_in "Published at", with: @diary.published_at
-    fill_in "Title", with: @diary.title
-    click_on "Create Diary"
+    fill_in "内容", with: @diary.description
+    fill_in "画像", with: @diary.picture
+    fill_in "日付", with: @diary.published_at
+    fill_in "タイトル", with: @diary.title
+    click_on "投稿"
 
     assert_text "Diary was successfully created"
-    click_on "Back"
   end
 
   test "should update Diary" do
-    visit diary_url(@diary)
+    login_as(@user2)
+    visit diary_url(@diary2)
+    save_page
     click_on "編集", match: :first
 
-    fill_in "Description", with: @diary.description
-    fill_in "Picture", with: @diary.picture
-    fill_in "Published at", with: @diary.published_at
-    fill_in "Title", with: @diary.title
-    click_on "Update Diary"
+    fill_in "内容", with: @diary.description
+    fill_in "画像", with: @diary.picture
+    fill_in "日付", with: @diary.published_at
+    fill_in "タイトル", with: @diary.title
+    click_on "更新"
 
     assert_text "Diary was successfully updated"
-    click_on "Back"
   end
 
   test "should destroy Diary" do
-    visit diary_url(@diary)
-    click_on "削除", match: :first
+    login_as(@user1)
+    visit diary_url(@diary1)
+    accept_confirm do
+      click_on "削除", match: :first
+    end
 
-    assert_text "Diary was successfully destroyed"
+    assert_text "日記を削除しました。"
   end
 end
