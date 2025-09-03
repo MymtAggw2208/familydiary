@@ -18,7 +18,7 @@ class DiariesTest < ApplicationSystemTestCase
     login_as(@user2)
     visit diaries_url
 
-    click_on "日記" 
+    click_on "日記"
     click_on "新規投稿"
 
     fill_in "内容", with: @diary2.description
