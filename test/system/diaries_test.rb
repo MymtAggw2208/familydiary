@@ -1,11 +1,10 @@
 require "application_system_test_case"
 
 class DiariesTest < ApplicationSystemTestCase
-  
   setup do
-    @user1 = users(:one) 
+    @user1 = users(:one)
     @diary1 = diaries(:one)
-    @user2 = users(:two) 
+    @user2 = users(:two)
     @diary2 = diaries(:two)
   end
 
