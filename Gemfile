@@ -63,15 +63,15 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-
-  # for debug
-  gem "ruby-debug-ide"
-  gem "debase"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # for debug
+  gem "ruby-debug-ide"
+  gem "debase"
 end
 
 group :test do

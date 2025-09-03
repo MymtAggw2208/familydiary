@@ -2,12 +2,14 @@
 
 one:
   title: MyString
+  user_id: 1
   description: MyText
   picture: MyString
   published_at: 2025-07-06
 
 two:
   title: MyString
+  user_id: 2
   description: MyText
   picture: MyString
   published_at: 2025-07-06
