@@ -22,7 +22,7 @@ class DiariesController < ApplicationController
 
   # GET /diaries/1/edit
   def edit
-    authorize_diary_owner("編集")
+    authorize_diary_owner("編集") and return
   end
 
   # POST /diaries or /diaries.json
@@ -45,7 +45,7 @@ class DiariesController < ApplicationController
   # PATCH/PUT /diaries/1 or /diaries/1.json
   def update
     respond_to do |format|
-      authorize_diary_owner("更新")
+      authorize_diary_owner("更新") and return
       if @diary.update(diary_params)
         format.html { redirect_to @diary, notice: "日記を更新しました。" }
         format.json { render :show, status: :ok, location: @diary }
@@ -59,7 +59,7 @@ class DiariesController < ApplicationController
   # DELETE /diaries/1 or /diaries/1.json
   def destroy
     respond_to do |format|
-      authorize_diary_owner("削除")
+      authorize_diary_owner("削除") and return
       @diary.destroy!
       format.html { redirect_to diaries_path, status: :see_other, notice: "日記を削除しました。" }
       format.json { head :no_content }

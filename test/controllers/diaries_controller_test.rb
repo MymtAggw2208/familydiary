@@ -1,8 +1,12 @@
 require "test_helper"
 
 class DiariesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @diary = diaries(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,7 +21,7 @@ class DiariesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create diary" do
     assert_difference("Diary.count") do
-      post diaries_url, params: { diary: { description: @diary.description, picture: @diary.picture, published_at: @diary.published_at, title: @diary.title } }
+      post diaries_url, params: { diary: { description: @diary.description, picture: @diary.picture, published_at: @diary.published_at, title: @diary.title, user: @user } }
     end
 
     assert_redirected_to diary_url(Diary.last)

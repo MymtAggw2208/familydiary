@@ -17,8 +17,9 @@ class CommentsController < ApplicationController
   def destroy
     @diary = Diary.find(params[:diary_id])
     @comment = @diary.comments.find(params[:id])
-    authorize_comment_owner("削除")
+    authorize_comment_owner("削除") and return
     @comment.destroy
+    redirect_to @diary, notice: "コメントを削除しました。"
   end
 
   private

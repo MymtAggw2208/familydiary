@@ -15,3 +15,16 @@ two:
   encrypted_password: "$2a$12$J4GnkEayd2ZjWHqqEs0xAOO75qdqQBLhmdn1IHHrh2DqS4a.VQGZC"
   name: two_username
   login_id: two_loginid
+
+three: 
+  email: three@example.com
+  encrypted_password: "$2a$12$WhbSEI60rVJtkjk1C8lj4uS0oXIvkNdlrbEoQXUcpS2Jg3brQIe6e"
+  name: three_username
+  login_id: three_loginid
+
+admin: 
+  email: admin@example.com
+  encrypted_password: "$2a$12$aWr3JAJCxLG.O9328klOWuRsnmtagsBp8sWaw9R2JpUoeIynwWK5S"
+  name: admin_username
+  login_id: admin_loginid
+  role: admin
