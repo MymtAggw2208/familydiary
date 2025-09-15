@@ -45,11 +45,8 @@ gem "mini_magick"
 gem "devise"
 gem "devise-i18n"
 
-# HTTP client library, required by some APIs
-gem "faraday"
-
-# add httparty
-gem "httparty"
+# Gemini API client
+gem "gemini-ai"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
