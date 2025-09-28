@@ -16,7 +16,11 @@ class DailyChat < ApplicationRecord
   end
 
   def title
-    "#{chat_date.strftime('%Y年%m月%d日')}のチャット"
+    if chat_date == Date.current
+      "今日のチャット"
+    else
+      "#{chat_date.strftime('%Y年%-m月%-d日')}のチャット"
+    end
   end
 
   def needs_initial_message?

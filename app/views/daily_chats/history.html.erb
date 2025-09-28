@@ -2,69 +2,49 @@
 
 <div class="container mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">チャット履歴</h1>
-    <%= link_to "今日のチャット", today_daily_chats_path, 
-        class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors" %>
+    <div class="h1">チャット履歴</div>
   </div>
   
   <% if @daily_chats.any? %>
-    <div class="space-y-4">
+    <div class="countainer m-3">
       <% @daily_chats.each do |daily_chat| %>
-        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <h3 class="text-lg font-semibold text-gray-800">
-                <%= daily_chat.title %>
-              </h3>
-              <p class="text-sm text-gray-600">
-                <%= l daily_chat.chat_date, format: :long %>
-                • <%= %w[日 月 火 水 木 金 土][daily_chat.chat_date.wday] %>曜日
-              </p>
-            </div>
-            <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded">
-              <%= daily_chat.chat_messages.count %>件
-            </span>
+        <div class="card m-4 shadow rounded">
+          <div class="card-title text-bg-primary">
+            <div class="h3"><%= daily_chat.title %></div>
           </div>
-          
-          <% if daily_chat.last_message %>
-            <div class="text-sm text-gray-700 mb-4 p-3 bg-gray-50 rounded">
-              <p class="font-medium mb-1">
+          <div class="card-subtitle ps-4 text-secondary">
+            <%= l daily_chat.chat_date, format: :long %>
+          </div>
+          <div class="card-body m-2">          
+            <% if daily_chat.last_message %>
+              <p class="m-1">
                 <%= daily_chat.last_message.user_message? ? "あなた" : "AIアシスタント" %>:
               </p>
-              <p class="truncate">
+              <p class="truncate m-2">
                 <%= truncate(daily_chat.last_message.content, length: 100) %>
               </p>
-            </div>
-          <% end %>
-          
-          <div class="flex justify-between items-center">
-            <% if daily_chat.chat_date == Date.current %>
-              <%= link_to "開く", today_daily_chats_path, class: "text-blue-600 hover:text-blue-800 font-medium" %>
-            <% else %>
-              <% if daily_chat.chat_date == Date.current %>
-                <%= link_to "開く", today_daily_chats_path %>
-              <% else %>
-                <%= link_to "開く", date_daily_chats_path(daily_chat.chat_date.strftime('%Y-%m-%d')) %>
-              <% end %>
             <% end %>
-            <span class="text-xs text-gray-400">
-              最終更新: <%= l daily_chat.last_message.created_at, format: :short if daily_chat.last_message %>
+          </div>
+          <div class="card-footer d-flex">
+            <% if daily_chat.chat_date == Date.current %>
+              <%= button_to "開く", today_daily_chats_path, method: :get , class: "btn btn-primary ms-3" %>
+            <% else %>
+              <%= button_to "開く", date_daily_chats_path(daily_chat.chat_date.strftime('%Y-%m-%d')),
+                method: :get, class: "btn btn-primary ms-3" %>
+            <% end %>
+            <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded">
+              <%= daily_chat.chat_messages.count %>件
             </span>
           </div>
         </div>
       <% end %>
     </div>
   <% else %>
-    <div class="text-center py-16">
-      <div class="text-gray-500 mb-4">
-        <svg class="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-        </svg>
-      </div>
-      <h3 class="text-xl font-medium text-gray-900 mb-2">まだチャット履歴がありません</h3>
-      <p class="text-gray-600 mb-6">今日からAIとの対話を始めましょう</p>
-      <%= link_to "今日のチャットを始める", today_daily_chats_path, 
-          class: "bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors" %>
+    <div class="countainer text-center m-3">
+      <div class="th3">まだチャット履歴がありません</div>
+      <p class="text-secondary">今日からAIとの対話を始めましょう</p>
+      <%= button_to "今日のチャットを始める", today_daily_chats_path, method: :get,
+          class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
