@@ -20,22 +20,7 @@ class GeminiService
   def generate_reply(diary)
     prompt = build_prompt(diary)
 
-    response = @client.stream_generate_content(
-      {
-        contents: {
-          role: "user",
-          parts: {
-            text: prompt
-          }
-        },
-        generationConfig: {
-          temperature: 0.7,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 1024
-        }
-      }
-    )
+    response = get_ai_response(prompt)
 
     # gemini-ai gemのレスポンス形式に対応
     content = extract_content_from_response(response)
@@ -43,6 +28,16 @@ class GeminiService
   rescue => e
     Rails.logger.error "Gemini API error: #{e.message}"
     "お疲れ様でした。素敵な日記をありがとうございます。"
+  end
+
+  def generate_chat_response(prompt)
+    response = get_ai_response(prompt)
+
+    content = extract_content_from_response(response)
+    content&.strip
+  rescue => e
+    Rails.logger.error "Gemini chat API error: #{e.message}"
+    "申し訳ありませんが、現在返信を生成できません。しばらく後に再度お試しください。"
   end
 
   private
@@ -64,6 +59,25 @@ class GeminiService
     TEXT
 
     prompt
+  end
+
+  def get_ai_response(prompt)
+    @client.stream_generate_content(
+      {
+        contents: {
+          role: "user",
+          parts: {
+            text: prompt
+          }
+        },
+        generationConfig: {
+          temperature: 0.8,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 512
+        }
+      }
+    )
   end
 
   def extract_content_from_response(response)

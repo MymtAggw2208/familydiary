@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "chat_messages/create"
   # Deviseのregistrationsコントローラーをカスタムコントローラーで上書き
   devise_for :users, controllers: {
     registrations: "users/registrations"
@@ -18,6 +19,18 @@ Rails.application.routes.draw do
   resources :diaries do
     resources :comments, only: [ :create, :destroy ]
   end
+
+  # チャット関連
+  resources :daily_chats, only: [] do
+    collection do
+      get :today, action: :show, as: :today  # /daily_chats/today
+      get :history
+      delete :clear_messages
+      get "date/:date", action: :show_date, as: :date
+    end
+    resources :chat_messages, only: [ :create ]
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

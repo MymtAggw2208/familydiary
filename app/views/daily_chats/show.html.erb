@@ -1,0 +1,73 @@
+<% content_for :title, @daily_chat.title %>
+
+<div class="container mx-auto flex h-screen bg-gray-100">
+  <div class="flex items-center">
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+      <%= button_to "チャット履歴", history_daily_chats_path, 
+          method: :get,
+          class: "btn btn-primary ms-3" %>
+      
+      <%= button_to "今日のメッセージクリア", clear_messages_daily_chats_path, 
+          method: :delete,
+          data: { confirm: "今日のメッセージをすべて削除しますか？" },
+          class: "btn btn-danger ms-3" %>
+    </div>
+  </div>
+  
+  <!-- メインチャットエリア -->
+  <div class="container mx-auto flex-column w-100 mb-3">
+    <!-- ヘッダー -->
+    <div class="d-inline-flex p-2 align-items-center shadow rounded">
+      <p class="h1"><%= @daily_chat.title %></p>
+    </div>
+    
+    <!-- チャットメッセージ表示エリア -->
+    <div class="countainer mx-auto w-100 mb-3" data-controller="daily-chat-show">
+      <div class="chat-messages" id="chat-messages" data-daily-chat-show-target="chatMessages">
+        <% if @chat_messages.any? %>
+          <% @chat_messages.each do |message| %>
+            <div class="d-flex <%= 'justify-content-end' if message.user_message? %>">
+              <div class="card w-50 mb-3 <%= message.user_message? ? 'border-primary' : 'text-bg-secondary' %>">
+                <div class="card-body mb-6 <%= 'flex' if message.user_message? %>">
+                  <div class="card-text">
+                    <%= simple_format(message.content, {}, wrapper_tag: "div") %>
+                  </div>
+                  <div class="card-footer d-flex">
+                    <%= message.user_message? ? 'あなた' : 'AIアシスタント' %>
+                    <%= l message.created_at, format: :time %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="card-text text-center">
+                🤖AIが今日の挨拶を準備中...
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- メッセージ入力フォーム -->
+    <div class="countainer mx-auto w-100 mb-3" data-controller="daily-chat-show">
+      <%= form_with model: [@daily_chat, @new_message], local: true, class: "d-flex" do |form| %>
+        <div class="input-group mb-3">
+          <textarea class="form-control" data-daily-chat-show-target="messageInput" 
+            data-action="keydown->daily-chat-show#sendOnEnter" name="chat_message[content]"
+            aria-describedby="send-button" id="message-input" placeholder="お話しましょう！"></textarea>
+          <button class="btn btn-primary" data-daily-chat-show-target="sendButton"
+            type="submit" id="send-button"><i class="bi bi-send"></i></button>
+          <% if @new_message&.errors&.any? %>
+            <div class="text-bg-danger mt-2">
+              <%= @new_message.errors.full_messages.join(", ") %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

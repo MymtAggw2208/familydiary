@@ -4,6 +4,8 @@ ja:
       user: "ユーザー"
       diary: "日記"
       comment: "コメント"
+      daily_chat: "デイリーチャット"
+      chat_message: "チャットメッセージ"
     attributes:
       user:
         login_id: "ログインID"
@@ -15,6 +17,13 @@ ja:
         description: "内容"
         picture: "画像"
         published_at: "日付"
+      daily_chat:
+        chat_date: "チャット日付"
+        user: "ユーザー"
+      chat_message:
+        content: "内容"
+        role: "役割"
+        daily_chat: "デイリーチャット"
     errors:
       models:
         diary:
@@ -39,3 +48,7 @@ ja:
       comment:
         create: "投稿"
         update: "更新"
+  time:
+    formats:
+      time: "%Y-%m-%d %H:%M:%S"
+      short: "%Y-%m-%d"

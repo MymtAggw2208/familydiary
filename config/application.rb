@@ -27,5 +27,6 @@ module Familydiary
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_job.queue_adapter = :async
+    config.time_zone = "Tokyo"
   end
 end

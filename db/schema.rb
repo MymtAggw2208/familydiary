@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_24_050552) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_15_052907) do
   create_table "ai_replies", force: :cascade do |t|
     t.integer "diary_id", null: false
     t.text "content"
@@ -18,6 +18,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_24_050552) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["diary_id"], name: "index_ai_replies_on_diary_id"
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.integer "daily_chat_id", null: false
+    t.text "content"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["daily_chat_id"], name: "index_chat_messages_on_daily_chat_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -28,6 +37,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_24_050552) do
     t.datetime "updated_at", null: false
     t.index ["diary_id"], name: "index_comments_on_diary_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "daily_chats", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "chat_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_daily_chats_on_user_id"
   end
 
   create_table "diaries", force: :cascade do |t|
@@ -58,7 +75,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_24_050552) do
   end
 
   add_foreign_key "ai_replies", "diaries"
+  add_foreign_key "chat_messages", "daily_chats"
   add_foreign_key "comments", "diaries"
   add_foreign_key "comments", "users"
+  add_foreign_key "daily_chats", "users"
   add_foreign_key "diaries", "users"
 end

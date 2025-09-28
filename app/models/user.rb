@@ -12,6 +12,8 @@ class User < ApplicationRecord
   # relation
   has_many :diaries, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :daily_chats, dependent: :destroy
+  has_many :chat_messages, through: :daily_chats, dependent: :destroy
 
   enum :role, { test: "test", admin: "administrator" }
 
@@ -51,5 +53,10 @@ class User < ApplicationRecord
     return false if test_user? # テストユーザーは誰も編集不可
     return true if self == target_user # 一般ユーザーは自分のみ編集可能
     false
+  end
+
+  # 今日のチャットかどうかを判定
+  def today_chat?
+    daily_chats.for_today(self)
   end
 end
