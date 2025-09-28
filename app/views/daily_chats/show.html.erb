@@ -6,11 +6,12 @@
       <%= button_to "チャット履歴", history_daily_chats_path, 
           method: :get,
           class: "btn btn-primary ms-3" %>
-      
-      <%= button_to "今日のメッセージクリア", clear_messages_daily_chats_path, 
-          method: :delete,
-          data: { confirm: "今日のメッセージをすべて削除しますか？" },
-          class: "btn btn-danger ms-3" %>
+      <% if @daily_chat.chat_date == Date.current %>
+        <%= button_to "今日のメッセージクリア", clear_messages_daily_chats_path, 
+            method: :delete,
+            data: { confirm: "今日のメッセージをすべて削除しますか？" },
+            class: "btn btn-danger ms-3" %>
+      <% end %>
     </div>
   </div>
   

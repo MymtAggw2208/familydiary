@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   # チャット関連
-  resources :daily_chats, only: [] do
+  resources :daily_chats, only: [ :show ] do
     collection do
       get :today, action: :show, as: :today  # /daily_chats/today
       get :history

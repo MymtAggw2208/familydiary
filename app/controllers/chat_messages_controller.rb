@@ -8,7 +8,7 @@ class ChatMessagesController < ApplicationController
     if @user_message.save
       # AIからの返信を生成
       generate_ai_response
-      redirect_to daily_chat_chat_messages_path
+      redirect_to daily_chat_path(@daily_chat)
     else
       @chat_messages = @daily_chat.chat_messages.ordered
       @new_message = @user_message
