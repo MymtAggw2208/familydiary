@@ -1,4 +1,4 @@
-<%= form_with(model: diary) do |form| %>
+<%= form_with(model: diary) do |f| %>
   <% if diary.errors.any? %>
     <div class="alert alert-danger">
       <h5><%= diary.errors.count %> 件のエラーにより保存できませんでした:</h5>
@@ -12,26 +12,33 @@
   <% end %>
 
   <div class="my-4">
-    <%= form.label :title, class: "form-label" %>
-    <%= form.text_field :title, class: "form-control" %>
+    <%= f.label :title, class: "form-label" %>
+    <%= f.text_field :title, class: "form-control" %>
   </div>
 
   <div class="my-4">
-    <%= form.label :description, class: "form-label" %>
-    <%= form.textarea :description, placeholder: "日記を入力してください...", class: "form-control" %>
+    <%= f.label :description, class: "form-label" %>
+    <%= f.textarea :description, placeholder: "日記を入力してください...", class: "form-control" %>
   </div>
 
   <div class="my-4">
-    <%= form.label :picture, class: "form-label" %>
-    <%= form.file_field :picture, class: "form-control" %>
+    <%= f.label :picture, class: "form-label" %>
+    <%= f.file_field :picture, class: "form-control" %>
   </div>
 
   <div class="my-4">
-    <%= form.label :published_at, class: "form-label" %>
-    <%= form.date_field :published_at, class: "form-control" %>
+    <%= f.label :published_at, class: "form-label" %>
+    <%= f.date_field :published_at, class: "form-control" %>
   </div>
 
   <div class="my-4">
-    <%= form.submit class: "btn btn-primary" %>
+    <%= f.label :visible, class: "form-label" %>
+    <div class="form-check form-switch">
+      <%= f.check_box :visible, class: "form-check-input" %>
+      <label class="form-check-label" for="diary_visible">公開する</label>
+    </div>
+
+  <div class="my-4">
+    <%= f.submit class: "btn btn-primary" %>
   </div>
 <% end %>

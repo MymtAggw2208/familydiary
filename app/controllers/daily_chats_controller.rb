@@ -47,7 +47,7 @@ class DailyChatsController < ApplicationController
   def generate_initial_message
     begin
       daily_chat_service = DailyChatService.new
-      initial_message = daily_chat_service.generate_daily_greeting(@daily_chat)
+      initial_message = daily_chat_service.generate_daily_greeting(@daily_chat, current_user)
 
       if initial_message.present?
         @daily_chat.chat_messages.create!(

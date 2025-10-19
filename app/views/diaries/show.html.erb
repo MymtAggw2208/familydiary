@@ -1,73 +1,82 @@
-<%= render @diary %>
 
-<% if @diary.user == current_user %>
-  <div class="btn-toolbar">
-    <%= link_to "編集", edit_diary_path(@diary), class: "btn btn-info" %> 
+<% if @diary.visible? || @diary.user == current_user %>
+  <%= render @diary %>
 
-    <%= button_to "削除", @diary, method: :delete, 
-                data: { turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger ms-3" %>
-  </div>
-<% end %>
+  <% if @diary.user == current_user %>
+    <div class="btn-toolbar">
+      <%= link_to "編集", edit_diary_path(@diary), class: "btn btn-info" %> 
 
-<% if user_signed_in? %>
-  <div class="comment-form mt-4">
-    <%= form_with(model: [@diary, @comment], local: true, data: { turbo: false }) do |form| %>
-      <% if @comment.errors.any? %>
-        <div class="alert alert-danger">
-          <h5><%= @comment.errors.count %> 件のエラーにより保存できませんでした:</h5>
-          <ul>
-            <% @comment.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
+      <%= button_to "削除", @diary, method: :delete, 
+                  data: { turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger ms-3" %>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <div class="comment-form mt-4">
+      <%= form_with(model: [@diary, @comment], local: true, data: { turbo: false }) do |form| %>
+        <% if @comment.errors.any? %>
+          <div class="alert alert-danger">
+            <h5><%= @comment.errors.count %> 件のエラーにより保存できませんでした:</h5>
+            <ul>
+              <% @comment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= form.text_area :content, placeholder: "コメントを入力してください...", 
+                            rows: 4, class: "form-control" %>
+        </div>
+
+        <div class="form-group mt-2 mb-2">
+          <%= form.submit class: "btn btn-primary" %>
         </div>
       <% end %>
+    </div>
+  <% end %>
 
-      <div class="form-group">
-        <%= form.text_area :content, placeholder: "コメントを入力してください...", 
-                          rows: 4, class: "form-control" %>
+  <div class="comments">  
+    <% if @ai_reply %>
+      <div class="ai-reply comment mt-4">
+        <div class="comment mt-4">
+          <div class="comment-header">
+            <strong>🤖 アシスタントからの返信</strong>
+            <span class="comment-date">
+              <%= @ai_reply.replied_at.strftime('%Y年%m月%d日 %H:%M') %>
+            </span>
+          </div>
+          <div class="comment-content">
+            <%= simple_format(@ai_reply.content) %>
+          </div>
+        </div>
       </div>
-
-      <div class="form-group mt-2 mb-2">
-        <%= form.submit class: "btn btn-primary" %>
+    <% end %>
+    
+    <% @comments.each do |comment| %>
+      <div class="comment mt-4">
+        <div class="comment-header">
+          <strong><%= comment.user.name %></strong>
+          <span class="comment-date">
+            <%= comment.created_at.strftime('%Y年%m月%d日 %H:%M') %>
+          </span>
+          <% if current_user == comment.user %>
+            <%= link_to "削除", diary_comment_path(@diary, comment),
+                  data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"}, 
+                          class: "btn btn-sm btn-outline-danger" %>
+          <% end %>
+        </div>
+        <div class="comment-content">
+          <%= simple_format(comment.content) %>
+        </div>
       </div>
     <% end %>
   </div>
+<% else %>
+  <div class="col-md-6 my-3">
+    <p class="text-center text-secondary">
+      非公開の日記です
+    </p>
+  </div>
 <% end %>
-
-<div class="comments">  
-  <% if @ai_reply %>
-    <div class="ai-reply comment mt-4">
-      <div class="comment mt-4">
-        <div class="comment-header">
-          <strong>🤖 アシスタントからの返信</strong>
-          <span class="comment-date">
-            <%= @ai_reply.replied_at.strftime('%Y年%m月%d日 %H:%M') %>
-          </span>
-        </div>
-        <div class="comment-content">
-          <%= simple_format(@ai_reply.content) %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-  
-  <% @comments.each do |comment| %>
-    <div class="comment mt-4">
-      <div class="comment-header">
-        <strong><%= comment.user.name %></strong>
-        <span class="comment-date">
-          <%= comment.created_at.strftime('%Y年%m月%d日 %H:%M') %>
-        </span>
-        <% if current_user == comment.user %>
-          <%= link_to "削除", diary_comment_path(@diary, comment),
-                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？"}, 
-                        class: "btn btn-sm btn-outline-danger" %>
-        <% end %>
-      </div>
-      <div class="comment-content">
-        <%= simple_format(comment.content) %>
-      </div>
-    </div>
-  <% end %>
-</div>

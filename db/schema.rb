@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_15_052907) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_105347) do
   create_table "ai_replies", force: :cascade do |t|
     t.integer "diary_id", null: false
     t.text "content"
@@ -55,6 +55,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_052907) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.boolean "visible"
     t.index ["user_id"], name: "index_diaries_on_user_id"
   end
 
@@ -69,6 +70,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_15_052907) do
     t.string "name", null: false
     t.string "login_id", null: false
     t.string "role"
+    t.date "birthday"
+    t.string "family"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_id"], name: "index_users_on_login_id", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

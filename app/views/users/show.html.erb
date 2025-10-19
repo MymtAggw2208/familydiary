@@ -16,6 +16,14 @@
         <td><%= @user.email %></td>
       </tr>
       <tr>
+        <th>誕生日</th>
+        <td><%= @user.birthday.strftime("%Y年%m月%d日 %H:%M") %></td>
+      </tr>
+      <tr>
+        <th>家族</th>
+        <td><%= @user.family %></td>
+      </tr>
+      <tr>
         <th>権限種類</th>
         <td>
           <% role_names = { 'admin' => '管理者', 'test' => 'テストユーザー', nil => '一般ユーザー' } %>

@@ -47,6 +47,16 @@
     </div>
   <% end %>
 
+  <div class="my-4">
+    <%= f.label :birthday, class: "form-label" %><br />
+    <%= f.date_field :birthday, class: "form-control" %>
+  </div>
+
+  <div class="my-4">
+    <%= f.label :family, class: "form-label" %><br />
+    <%= f.text_field :family, class: "form-control" %>
+  </div>
+
   <% if current_user.administrator? && resource != current_user %>
     <div class="my-4">
       <%= f.label :role, class: "form-label" %><br />

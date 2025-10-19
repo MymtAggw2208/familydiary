@@ -115,9 +115,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # 更新時のパラメータ
   def account_update_params
     if current_user.administrator?
-      params.require(:user).permit(:name, :login_id, :email, :password, :password_confirmation, :current_password, :role_type)
+      params.require(:user).permit(:name, :login_id, :email, :password, :password_confirmation,
+                                      :current_password, :birthday, :family, :role_type)
     else
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :current_password)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :birthday,
+                                      :family, :current_password)
     end
   end
 

@@ -11,12 +11,15 @@ ja:
         login_id: "ログインID"
         name: "名前"
         role: "権限"
+        family: "家族"
+        birthday: "生年月日"
       diary:
         user: "ユーザー"
         title: "タイトル"
         description: "内容"
         picture: "画像"
         published_at: "日付"
+        visible: "公開設定"
       daily_chat:
         chat_date: "チャット日付"
         user: "ユーザー"
