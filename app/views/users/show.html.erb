@@ -17,7 +17,13 @@
       </tr>
       <tr>
         <th>誕生日</th>
-        <td><%= @user.birthday.strftime("%Y年%m月%d日 %H:%M") %></td>
+        <td>
+          <% if @user.birthday %>
+            <%= @user.birthday.strftime("%Y年%m月%d日 %H:%M") %>
+          <% else %>
+            誕生日未登録
+          <% end %>
+        </td>
       </tr>
       <tr>
         <th>家族</th>
@@ -32,11 +38,23 @@
       </tr>
       <tr>
         <th>アカウント作成日</th>
-        <td><%= @user.created_at.strftime("%Y年%m月%d日 %H:%M") %></td> 
+        <td>
+          <% if @user.created_at %>
+            <%= @user.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+          <% else %>
+            作成日時不明
+          <% end %>
+        </td> 
       </tr>
       <tr>
         <th>アカウント更新日</th>
-        <td><%= @user.updated_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+        <td>
+          <% if @user.updated_at %>
+            <%= @user.updated_at.strftime("%Y年%m月%d日 %H:%M") %>
+          <%else %>
+            更新日時不明
+          <% end %>
+        </td>
       </tr>
     </tbody>
   </table>
